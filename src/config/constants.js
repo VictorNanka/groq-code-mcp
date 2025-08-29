@@ -9,7 +9,7 @@ export const config = {
   
   // OpenRouter configuration (fallback)
   openRouterApiKey: process.env.OPENROUTER_API_KEY,
-  openRouterSiteUrl: process.env.OPENROUTER_SITE_URL || 'https://github.com/yourusername/groq-code-mcp',
+  openRouterSiteUrl: process.env.OPENROUTER_SITE_URL || 'https://github.com/VictorNanka/groq-code-mcp',
   openRouterSiteName: process.env.OPENROUTER_SITE_NAME || 'Groq Code MCP',
   openRouterModel: 'qwen/qwen3-coder'
 };
