@@ -1,4 +1,4 @@
-import { callCerebras } from '../cerebras.js';
+import { callGroq } from '../groq.js';
 import { callOpenRouter } from '../openrouter.js';
 import { config } from '../../config/constants.js';
 
@@ -18,8 +18,8 @@ export async function routeAPICall(prompt, context = "", outputFile = "", langua
   
   try {
     switch (provider) {
-      case 'cerebras':
-        return await callCerebras(prompt, context, outputFile, language, contextFiles);
+      case 'groq':
+        return await callGroq(prompt, context, outputFile, language, contextFiles);
       
       case 'openrouter':
         return await callOpenRouter(prompt, context, outputFile, language, contextFiles);
@@ -35,8 +35,8 @@ export async function routeAPICall(prompt, context = "", outputFile = "", langua
       
       try {
         switch (fallbackProvider) {
-          case 'cerebras':
-            return await callCerebras(prompt, context, outputFile, language, contextFiles);
+          case 'groq':
+            return await callGroq(prompt, context, outputFile, language, contextFiles);
           
           case 'openrouter':
             return await callOpenRouter(prompt, context, outputFile, language, contextFiles);
@@ -57,13 +57,13 @@ export async function routeAPICall(prompt, context = "", outputFile = "", langua
  * Determines which provider to use based on configuration
  */
 function determineProvider() {
-  // Priority: Cerebras first (if API key available), then OpenRouter
-  if (config.cerebrasApiKey) {
-    return 'cerebras';
+  // Priority: Groq first (if API key available), then OpenRouter
+  if (config.groqApiKey) {
+    return 'groq';
   } else if (config.openRouterApiKey) {
     return 'openrouter';
   } else {
-    throw new Error('No API keys configured. Please set CEREBRAS_API_KEY or OPENROUTER_API_KEY environment variable.');
+    throw new Error('No API keys configured. Please set GROQ_API_KEY or OPENROUTER_API_KEY environment variable.');
   }
 }
 
@@ -72,8 +72,8 @@ function determineProvider() {
  */
 function getFallbackProvider(primaryProvider) {
   switch (primaryProvider) {
-    case 'cerebras':
-      // Fallback to OpenRouter if Cerebras fails
+    case 'groq':
+      // Fallback to OpenRouter if Groq fails
       return config.openRouterApiKey ? 'openrouter' : null;
   }
 }
@@ -84,10 +84,10 @@ function getFallbackProvider(primaryProvider) {
 export function getAvailableProviders() {
   const providers = [];
   
-  if (config.cerebrasApiKey) {
+  if (config.groqApiKey) {
     providers.push({
-      name: 'cerebras',
-      model: config.cerebrasModel,
+      name: 'groq',
+      model: config.groqModel,
       available: true
     });
   }

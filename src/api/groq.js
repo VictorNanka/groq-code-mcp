@@ -3,12 +3,12 @@ import path from 'path';
 import { config } from '../config/constants.js';
 import { readFileContent, getLanguageFromFile } from '../utils/file-utils.js';
 import { cleanCodeResponse } from '../utils/code-cleaner.js';
-// Call Cerebras Code API - generates only code, no explanations
-export async function callCerebras(prompt, context = "", outputFile = "", language = null, contextFiles = []) {
+// Call Groq Code API - generates only code, no explanations
+export async function callGroq(prompt, context = "", outputFile = "", language = null, contextFiles = []) {
   try {
-    // Check if Cerebras API key is available
-    if (!config.cerebrasApiKey) {
-      throw new Error("No Cerebras API key found. Please set CEREBRAS_API_KEY environment variable.");
+    // Check if Groq API key is available
+    if (!config.groqApiKey) {
+      throw new Error("No Groq API key found. Please set GROQ_API_KEY environment variable.");
     }
     
     // Determine language from file extension or explicit parameter
@@ -53,7 +53,7 @@ export async function callCerebras(prompt, context = "", outputFile = "", langua
     }
     
     const requestData = {
-      model: config.cerebrasModel,
+      model: config.groqModel,
       messages: [
         {
           role: "system",
@@ -78,14 +78,14 @@ export async function callCerebras(prompt, context = "", outputFile = "", langua
         const postData = JSON.stringify(requestData);
         
         const options = {
-          hostname: 'api.cerebras.ai',
+          hostname: 'api.groq.com',
           port: 443,
-          path: '/v1/chat/completions',
+          path: '/openai/v1/chat/completions',
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Content-Length': Buffer.byteLength(postData),
-            'Authorization': `Bearer ${config.cerebrasApiKey}`
+            'Authorization': `Bearer ${config.groqApiKey}`
           }
         };
         
@@ -105,7 +105,7 @@ export async function callCerebras(prompt, context = "", outputFile = "", langua
                 const cleanedContent = cleanCodeResponse(rawContent);
                 resolve(cleanedContent);
               } else {
-                reject(new Error(`Cerebras API error: ${res.statusCode} - ${response.error?.message || 'Unknown error'}`));
+                reject(new Error(`Groq API error: ${res.statusCode} - ${response.error?.message || 'Unknown error'}`));
               }
             } catch (parseError) {
               reject(new Error(`Failed to parse API response: ${parseError.message}`));
@@ -128,7 +128,7 @@ export async function callCerebras(prompt, context = "", outputFile = "", langua
       });
     } catch (error) {
       // Re-throw the error for the router to handle fallback logic
-      throw new Error(`Cerebras API call failed: ${error.message}`);
+      throw new Error(`Groq API call failed: ${error.message}`);
     }
   } catch (error) {
     // Re-throw any setup errors for the router to handle fallback logic

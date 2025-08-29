@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Cerebras Code MCP Server using Official MCP SDK v0.5.0
+ * Groq Code MCP Server using Official MCP SDK v0.5.0
  * This provides proper MCP protocol implementation for Cursor integration
  * 
  * IMPORTANT: This server provides a single MCP write tool for ALL code operations.
@@ -22,19 +22,19 @@ async function main() {
       return;
     }
     
-    console.error('Cerebras Code MCP Server starting...');
+    console.error('Groq Code MCP Server starting...');
     console.error(`📝 Debug logs will be written to: ${LOG_FILE}`);
     
     await debugLog('=== SERVER STARTUP ===');
-    await debugLog('Cerebras Code MCP Server starting...');
+    await debugLog('Groq Code MCP Server starting...');
     await debugLog(`Log file location: ${LOG_FILE}`);
     
     // Check API keys availability
-    if (!config.cerebrasApiKey) {
-      console.error("No Cerebras API key found");
-      console.error("Get your Cerebras API key at: https://cloud.cerebras.ai");
+    if (!config.groqApiKey) {
+      console.error("No Groq API key found");
+      console.error("Get your Groq API key at: https://console.groq.com");
     } else {
-      console.error("Cerebras API key found");
+      console.error("Groq API key found");
     }
     
     if (!config.openRouterApiKey) {
@@ -44,7 +44,7 @@ async function main() {
       console.error("OpenRouter API key found (will be used as fallback)");
     }
     
-    if (!config.cerebrasApiKey && !config.openRouterApiKey) {
+    if (!config.groqApiKey && !config.openRouterApiKey) {
       console.error("No API keys available. Server will not function properly.");
     }
     
@@ -57,11 +57,11 @@ async function main() {
     console.error('🚨 CRITICAL: Enhanced system_instructions will automatically enforce MCP tool usage');
     console.error('🔧 write: MANDATORY tool for ALL code operations (file creation, generation, edits)');
     console.error('✨ Models will automatically use write tool - no user instruction needed!');
-    if (config.cerebrasApiKey) {
-      console.error('Primary: Cerebras API');
+    if (config.groqApiKey) {
+      console.error('Primary: Groq API');
     }
     if (config.openRouterApiKey) {
-      console.error('Fallback: OpenRouter API (Cerebras via OpenRouter)');
+      console.error('Fallback: OpenRouter API');
     }
     
   } catch (error) {

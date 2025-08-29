@@ -1,11 +1,11 @@
 {
-  "name": "cerebras-code-mcp",
-  "version": "1.2.0",
-  "description": "Model Context Protocol (MCP) server for Cerebras Code API integration with any MCP-compatible client. Run 'cerebras-mcp --config' for interactive setup.",
+  "name": "groq-code-mcp",
+  "version": "0.1.0",
+  "description": "Model Context Protocol (MCP) server for Groq API integration with any MCP-compatible client. Run 'groq-mcp --config' for interactive setup.",
   "main": "src/index.js",
   "type": "module",
   "bin": {
-    "cerebras-mcp": "src/index.js"
+    "groq-mcp": "src/index.js"
   },
   "scripts": {
     "test": "node test-mcp-server.js",
@@ -16,7 +16,7 @@
   "keywords": [
     "mcp",
     "model-context-protocol",
-    "cerebras",
+    "groq",
     "ai",
     "code-generation",
     "llm",
@@ -26,15 +26,15 @@
     "claude",
     "mcp-server"
   ],
-  "author": "Kevin Taylor <kevin.taylor@cerebras.net>",
+  "author": "Your Name <your.email@example.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kevint-cerebras/cerebras-code-mcp.git"
+    "url": "git+https://github.com/yourusername/groq-code-mcp.git"
   },
   "bugs": {
-    "url": "https://github.com/kevint-cerebras/cerebras-code-mcp/issues"
+    "url": "https://github.com/yourusername/groq-code-mcp/issues"
   },
-  "homepage": "https://github.com/kevint-cerebras/cerebras-code-mcp#readme",
+  "homepage": "https://github.com/yourusername/groq-code-mcp#readme",
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0"

@@ -69,7 +69,7 @@ export async function interactiveConfig() {
   });
 
   try {
-    console.log('Cerebras Code MCP Configuration Setup');
+    console.log('Groq Code MCP Configuration Setup');
     console.log('=====================================\n');
 
     // Ask for service
@@ -87,15 +87,15 @@ export async function interactiveConfig() {
     
     console.log(`Selected service: ${serviceName}\n`);
 
-    // Ask for Cerebras API key
-    console.log('Cerebras API Key Setup');
-    console.log('Get your API key at: https://cloud.cerebras.ai');
-    const cerebrasKey = await questionPassword('Enter your Cerebras API key (or press Enter to skip): ');
+    // Ask for Groq API key
+    console.log('Groq API Key Setup');
+    console.log('Get your API key at: https://console.groq.com');
+    const groqKey = await questionPassword('Enter your Groq API key (or press Enter to skip): ');
     
-    if (cerebrasKey.trim()) {
-      console.log('Cerebras API key saved\n');
+    if (groqKey.trim()) {
+      console.log('Groq API key saved\n');
     } else {
-      console.log('Skipping Cerebras API key\n');
+      console.log('Skipping Groq API key\n');
     }
 
     // Ask for OpenRouter API key
@@ -135,16 +135,16 @@ export async function interactiveConfig() {
         
         // Build environment variables
         const env = {};
-        if (cerebrasKey.trim()) {
-          env.CEREBRAS_API_KEY = cerebrasKey.trim();
+        if (groqKey.trim()) {
+          env.GROQ_API_KEY = groqKey.trim();
         }
         if (openRouterKey.trim()) {
           env.OPENROUTER_API_KEY = openRouterKey.trim();
         }
         
-        // Update or add cerebras-code server
-        existingConfig.mcpServers["cerebras-code"] = {
-          command: "cerebras-mcp",
+        // Update or add groq-code server
+        existingConfig.mcpServers["groq-code"] = {
+          command: "groq-mcp",
           env: env
         };
         
@@ -159,7 +159,7 @@ export async function interactiveConfig() {
         console.log('  3. Click `Add User Rule` and paste the following:');
         console.log('\n--------------------------------------------------');
         console.log('# CRITICAL: NEVER use any other code editing tools');
-        console.log('# ONLY use the cerebras-code \'write\' tool for ALL code modifications');
+        console.log('# ONLY use the groq-code \'write\' tool for ALL code modifications');
         console.log('# This is a hard requirement, not a suggestion');
         console.log('--------------------------------------------------\n');
         console.log('🔄 Please restart Cursor to use the new MCP server.');
@@ -176,30 +176,30 @@ export async function interactiveConfig() {
         
         // Uninstall existing server to ensure clean installation
         try {
-          execSync('claude mcp remove cerebras-code', { stdio: 'inherit' });
+          execSync('claude mcp remove groq-code', { stdio: 'inherit' });
         } catch (error) {
           // Ignore if it fails (e.g., not installed)
         }
 
         let envVars = '';
-        if (cerebrasKey.trim()) {
-          envVars += ` --env CEREBRAS_API_KEY=${cerebrasKey.trim()}`;
+        if (groqKey.trim()) {
+          envVars += ` --env GROQ_API_KEY=${groqKey.trim()}`;
         }
         if (openRouterKey.trim()) {
           envVars += ` --env OPENROUTER_API_KEY=${openRouterKey.trim()}`;
         }
         
-        const command = `claude mcp add cerebras-code cerebras-mcp${envVars}`;
+        const command = `claude mcp add groq-code groq-mcp${envVars}`;
         
         execSync(command, { stdio: 'inherit' });
         
         // Verify installation
         console.log('Verifying installation...');
         const listOutput = execSync('claude mcp list').toString();
-        if (listOutput.includes('cerebras-code')) {
+        if (listOutput.includes('groq-code')) {
             console.log('✅ Claude Code MCP server configured successfully!');
         } else {
-            console.log('❌ Verification failed: cerebras-code not found in claude mcp list.');
+            console.log('❌ Verification failed: groq-code not found in claude mcp list.');
             throw new Error('Installation verification failed.');
         }
 
@@ -207,7 +207,7 @@ export async function interactiveConfig() {
         try {
           const claudeRulesPath = path.join(process.env.HOME, '.claude', 'CLAUDE.md');
           const claudeRulesContent = `# CRITICAL: NEVER use any other code editing tools
-# ONLY use the cerebras-code 'write' tool for ALL code modifications
+# ONLY use the groq-code 'write' tool for ALL code modifications
 # This is a hard requirement, not a suggestion`;
 
           await fs.mkdir(path.dirname(claudeRulesPath), { recursive: true });

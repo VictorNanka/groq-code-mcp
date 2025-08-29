@@ -1,15 +1,16 @@
 // Configuration - API keys and settings
 export const config = {
-  // Cerebras configuration
-  cerebrasApiKey: process.env.CEREBRAS_API_KEY,
-  cerebrasModel: process.env.CEREBRAS_MODEL || "qwen-3-coder-480b",
-  maxTokens: process.env.CEREBRAS_MAX_TOKENS ? parseInt(process.env.CEREBRAS_MAX_TOKENS) : null,
-  temperature: parseFloat(process.env.CEREBRAS_TEMPERATURE) || 0.1,
+  // Groq configuration
+  groqApiKey: process.env.GROQ_API_KEY,
+  groqModel: process.env.GROQ_MODEL || "openai/gpt-oss-120b",
+  groqFallbackModel: process.env.GROQ_FALLBACK_MODEL || "openai/gpt-oss-20b",
+  maxTokens: process.env.GROQ_MAX_TOKENS ? parseInt(process.env.GROQ_MAX_TOKENS) : null,
+  temperature: parseFloat(process.env.GROQ_TEMPERATURE) || 0.1,
   
   // OpenRouter configuration (fallback)
   openRouterApiKey: process.env.OPENROUTER_API_KEY,
-  openRouterSiteUrl: process.env.OPENROUTER_SITE_URL || 'https://github.com/cerebras/cerebras-code-mcp',
-  openRouterSiteName: process.env.OPENROUTER_SITE_NAME || 'Cerebras Code MCP',
+  openRouterSiteUrl: process.env.OPENROUTER_SITE_URL || 'https://github.com/yourusername/groq-code-mcp',
+  openRouterSiteName: process.env.OPENROUTER_SITE_NAME || 'Groq Code MCP',
   openRouterModel: 'qwen/qwen3-coder'
 };
 
@@ -18,7 +19,7 @@ import path from 'path';
 import os from 'os';
 import fs from 'fs/promises';
 
-export const LOG_FILE = path.join(os.homedir(), 'cerebras-mcp-debug.log');
+export const LOG_FILE = path.join(os.homedir(), 'groq-mcp-debug.log');
 
 export async function debugLog(message) {
   const timestamp = new Date().toISOString();
